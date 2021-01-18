@@ -110,15 +110,15 @@ function showResult(event) {
       datasets: [
         {
           label: "Votes",
-          backgroundColor: "rgb(255, 99, 132)",
-          borderColor: "rgb(255, 99, 132)",
+          backgroundColor: "rgb(100, 17, 17)",
+          borderColor: "black",
           data: imgVote,
         },
 
         {
           label: "showns",
-          backgroundColor: "#4b134f",
-          borderColor: "#4b134f",
+          backgroundColor: "rgb(94, 77, 77)",
+          borderColor: "black",
           data: statistics,
         },
       ],
