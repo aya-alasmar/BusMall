@@ -1,0 +1,74 @@
+body{
+   
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background-color: ivory;
+}
+header{
+    width: 960px;
+    margin: auto;
+}
+#result-btn{
+    visibility: hidden;
+}
+#logo{
+    font-family: 'Potta One', cursive;
+    font-size:45px;
+    font-weight: 900;
+    margin:30px;
+    text-align: center;
+    
+}
+I{
+    font-size: 20px;
+}
+#logo div{
+    float: left;
+}
+main{ width: 960px;
+    margin: auto;
+    font-family: 'Potta One', cursive;
+font-family: 'Teko', sans-serif;
+text-align: center;
+font-weight: 700;
+}
+h1{
+   
+    font-size:45px;
+}
+h4{
+    font-size: 35px;
+}
+#form{
+    margin:  40px auto;
+    width: 400px;
+    height:100px;
+    background-color: bisque;
+    padding:30px 10px;
+    font-size: xx-large;
+
+}
+input{
+    margin: 10px;
+}
+footer{
+    background-color:  rgb(3, 3, 3);
+    height: 30px;
+    color: mistyrose;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    padding: 10px;
+    margin-top: 50px;
+    
+}
+#images-div{
+    margin: 15px 0px;
+}
+ul {
+    margin-top: 20px;
+    width:70%;
+    list-style-type: square;
+    font-family: cursive;
+    font-size: large;
+    text-align: left;
+    font-weight: lighter;
+}

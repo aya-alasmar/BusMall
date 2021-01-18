@@ -5,19 +5,39 @@
     <meta name="viewport" content="width=  , initial-scale=1.0">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Teko:wght@300&display=swap" rel="stylesheet">
     <title>BusMall</title>
 
 </head>
 <body>
     <header>
+        <div id="logo"> BusMall
+        <div > <i class="fab fa-facebook-square"></i>
+            <i class="fab fa-youtube-square"></i>
+            <i class="fab fa-twitter-square"></i></div>
+            </div>
+        
 
   </header>
   <main>
-   
-    <form action="">
-        <input type="text" name="" id="number-input">
-         <button type="submit">Enter</button>
+    <div>
+        <h1>Welcome to vote on some products</h1>
+        <h4>We are going to collect the results to enhance our catalog for you</h4>
+    </div>
+    <form action="" id="form">
+        <fieldset>
+        <label>Insert the number of rounds that you want</label><br>
+         <input type="text" id="text" ><br>
+         <button type="submit" id="round-btn" >Enter </button><br>
+         
+         </fieldset>
     </form>
     <div id="images-div">
       <img id="left-image" src="" alt="" width="300" height="300" >
@@ -25,12 +45,18 @@
       <img id="right-image" src="" alt=""  width="300"height="300" >
     </div>
 
-    <ul id="results-list">
-    </ul>
+    <form id="result">
+        <button type="submit" id="result-btn" visible="false"  >Show Results </button>
+        <ul id="results-list"></ul>
+    </form>
+    
 
   </main>
   <footer>
       <script src="js/app.js"></script>
+      <p>
+        Bus Mall &copy; 2021 . All Rights Reserved.
+      </p>
 
   </footer>
 </body>
