@@ -4,32 +4,57 @@ body{
     background-color: ivory;
 }
 header{
-    width: 960px;
-    margin: auto;
+   
+   
+}
+.home-img{
+    background-image:url("../img/home.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 600px;
+   opacity: 0.3;
+
+
 }
 #result-btn{
     visibility: hidden;
 }
 #logo{
+    position: fixed;
+    top: 0%;
+    background-color: rgb(129, 10, 10);
+    width:-webkit-fill-available;
+    color: cornsilk;
+    text-shadow:3px 3px rgb(95, 86, 86);
     font-family: 'Potta One', cursive;
-    font-size:45px;
+    font-size:40px;
     font-weight: 900;
-    margin:30px;
+    margin-bottom:30px;
     text-align: center;
+    padding: 20px;
+    z-index: 1;
     
 }
-I{
-    font-size: 20px;
+.home-par{
+    width: -webkit-fill-available;
+    position: absolute;
+    top: 150px;
+    text-align: center;
 }
-#logo div{
-    float: left;
+.social{
+    float: right;
+    font-size: 30px;
 }
+I:hover{
+    color:darkgray;    
+}
+
 main{ width: 960px;
     margin: auto;
     font-family: 'Potta One', cursive;
-font-family: 'Teko', sans-serif;
-text-align: center;
-font-weight: 700;
+    font-family: 'Teko', sans-serif;
+    text-align: center;
+    font-weight: 700;
 }
 h1{
    
