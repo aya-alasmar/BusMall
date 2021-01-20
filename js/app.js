@@ -44,7 +44,7 @@ new getImage("unicorn", "img/unicorn.jpg");
 new getImage("usb", "img/usb.gif");
 new getImage("water-can", "img/water-can.jpg");
 new getImage("wine-glass", "img/wine-glass.jpg");
-var voteInLs, repeatInLs,maxAttemptsLs ,localStorageArr;
+var voteInLs, repeatInLs, maxAttemptsLs, localStorageArr;
 renderRandomImages();
 
 var form = document.getElementById("form");
@@ -89,9 +89,9 @@ function showResult(event) {
   var resultsList = document.getElementById("results-list");
   resultsList.textContent = " ";
   var resultItem;
-  percentage();
+  
   for (var i = 0; i < getImage.prototype.allImages.length; i++) {
-    
+    percentage(getImage.prototype.allImages[i]);
     resultItem = document.createElement("li");
     resultItem.textContent =
       getImage.prototype.allImages[i].name +
@@ -104,19 +104,13 @@ function showResult(event) {
     imgVote.push(getImage.prototype.allImages[i].votePercentage);
     statistics.push(getImage.prototype.allImages[i].shownPercentage);
 
-    
-    voteAndRepeatLocalStorage(getImage.prototype.allImages[i].name)
 
-  
-      
-    }
-
-  
+    voteAndRepeatLocalStorage(getImage.prototype.allImages[i])
 
 
-  /* voteInLs = toJsObj(localStorage.getItem(getImage.prototype.allImages[i].name)).votes + getImage.prototype.allImages[i].name;
-   */    
 
+  }
+ 
   // the chart
   var ctx = document.getElementById("myChart").getContext("2d");
   var chart = new Chart(ctx, {
@@ -174,13 +168,12 @@ function generateRandomi() {
   return Math.floor(Math.random() * getImage.prototype.allImages.length);
 }
 
-function percentage() {
-  for (var i = 0; i < getImage.prototype.allImages.length; i++) {
-    getImage.prototype.allImages[i].shownPercentage =
-      (getImage.prototype.allImages[i].repeat / maxAttempts * 100 );
-    getImage.prototype.allImages[i].votePercentage =
-      (getImage.prototype.allImages[i].votes / maxAttempts * 100) ;
-  }
+function percentage(item) {
+  localStorageArr=localStorage.getItem(item.name).split(',');
+   item.shownPercentage = localStorageArr[1] / localStorageArr[2] * 100;
+   item.votePercentage =localStorageArr[0] /localStorageArr[2] * 100;
+   console.log(item.shownPercentage,item.votePercentage);
+
 }
 
 function check(imgi) {
@@ -192,44 +185,26 @@ function check(imgi) {
   return false;
 }
 
-function toLocalStorageObj(jsObj){
-  var stringObj = JSON.stringify(jsObj);
-  localStorage.setItem(jsObj.name, stringObj);
-  return localStorage.getItem(jsObj.name);
-  
-}
-function toJsObj(stringObj){
-  if (localStorage !== null){
-    var jsObj =JSON.parse(stringObj);
-   return jsObj;
-  }
-}
+function voteAndRepeatLocalStorage(item) {
 
-function voteAndRepeatLocalStorage(item){
-  if(localStorage.getItem(item) !== null){
-    
-    localStorageArr=localStorage.getItem(item.split(','));
-    localStorageArr[0]  = localStorageArr[0] +voteInLs;
-    localStorageArr[1]  = localStorageArr[1] +repeatInLs;
-    localStorageArr[2]  = localStorageArr[2] +maxAttemptsLs;
-    
-  /* voteInLs = toJsObj(localStorage.getItem(getImage.prototype.allImages[i].name)).votes;
-  repeatInLs = toJsObj(localStorage.getItem(getImage.prototype.allImages[i].name)).repeat;
-  maxAttemptsLs = maxAttempts;
-  localStorage.setItem(getImage.prototype.allImages[i].name , [voteInLs,repeatInLs,maxAttemptsLs]); */
-  console.log(localStorage.getItem(item), 'if');
+  if (localStorage.getItem(item.name) !== null) {
+    localStorageArr=localStorage.getItem(item.name).split(',');
+
+    localStorageArr[0] = Number(localStorageArr[0]) + item.votes;
+    localStorageArr[1] = Number(localStorageArr[1] )+ item.repeat;
+    localStorageArr[2] = Number(localStorageArr[2] )+ Number(maxAttempts); 
+    localStorage.setItem(item.name , localStorageArr);
+    console.log(item.name, localStorageArr, 'if');
   }
-  else{
+  else {
     voteInLs = item.votes;
-    repeatInLs =item.repeat;
+    repeatInLs = item.repeat;
     maxAttemptsLs = Number(maxAttempts);
-    localStorage.setItem(item , [voteInLs,repeatInLs,maxAttemptsLs]);
-    console.log(localStorage.getItem(item));
-    }
-}
-/* for (var i = 0; i < getImage.prototype.allImages.length; i++) {
-   console.log(toLocalStorageObj(getImage.prototype.allImages[i]), "string obj");
-   console.log(toJsObj(localStorage.getItem(getImage.prototype.allImages[i].name)));
+    localStorage.setItem(item.name, [voteInLs, repeatInLs, maxAttemptsLs]);
+   // console.log(localStorage.getItem(item.name));
+  }
+  percentage(item);
 
-} */
+  }
+
 
