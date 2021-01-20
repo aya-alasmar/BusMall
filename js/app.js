@@ -5,11 +5,12 @@ var middleImageElement = document.getElementById("middle-image");
 var rightImageElement = document.getElementById("right-image");
 var maxAttempts = 25;
 var userAttemptsCounter = 0;
-var leftImageIndex, middleImageIndex, rightImageIndex;
+var leftImagei, middleImagei, rightImagei;
 var imagesNames = [];
 var imgVote = [];
 var statistics = [];
 var checkArray = [-1, -1, -1];
+
 function getImage(name, source) {
   this.name = name;
   this.source = source;
@@ -17,6 +18,7 @@ function getImage(name, source) {
   this.repeat = 0;
   this.shownPercentage = 0;
   this.votePercentage = 0;
+
   imagesNames.push(name);
   getImage.prototype.allImages.push(this);
 }
@@ -42,7 +44,7 @@ new getImage("unicorn", "img/unicorn.jpg");
 new getImage("usb", "img/usb.gif");
 new getImage("water-can", "img/water-can.jpg");
 new getImage("wine-glass", "img/wine-glass.jpg");
-
+var voteInLs, repeatInLs,maxAttemptsLs ,localStorageArr;
 renderRandomImages();
 
 var form = document.getElementById("form");
@@ -58,11 +60,11 @@ function handleUserClick(event) {
 
   if (userAttemptsCounter <= maxAttempts) {
     if (event.target.id === "left-image") {
-      getImage.prototype.allImages[leftImageIndex].votes++;
+      getImage.prototype.allImages[leftImagei].votes++;
     } else if (event.target.id === "middle-image") {
-      getImage.prototype.allImages[middleImageIndex].votes++;
+      getImage.prototype.allImages[middleImagei].votes++;
     } else {
-      getImage.prototype.allImages[rightImageIndex].votes++;
+      getImage.prototype.allImages[rightImagei].votes++;
     }
     renderRandomImages();
   } else {
@@ -89,6 +91,7 @@ function showResult(event) {
   var resultItem;
   percentage();
   for (var i = 0; i < getImage.prototype.allImages.length; i++) {
+    
     resultItem = document.createElement("li");
     resultItem.textContent =
       getImage.prototype.allImages[i].name +
@@ -100,7 +103,20 @@ function showResult(event) {
     resultsList.appendChild(resultItem);
     imgVote.push(getImage.prototype.allImages[i].votePercentage);
     statistics.push(getImage.prototype.allImages[i].shownPercentage);
-  }
+
+    
+    voteAndRepeatLocalStorage(getImage.prototype.allImages[i].name)
+
+  
+      
+    }
+
+  
+
+
+  /* voteInLs = toJsObj(localStorage.getItem(getImage.prototype.allImages[i].name)).votes + getImage.prototype.allImages[i].name;
+   */    
+
   // the chart
   var ctx = document.getElementById("myChart").getContext("2d");
   var chart = new Chart(ctx, {
@@ -125,54 +141,95 @@ function showResult(event) {
     },
   });
 }
-
 function renderRandomImages() {
   do {
-    leftImageIndex = generateRandomIndex();
-    rightImageIndex = generateRandomIndex();
-    middleImageIndex = generateRandomIndex();
+    leftImagei = generateRandomi();
+    rightImagei = generateRandomi();
+    middleImagei = generateRandomi();
   } while (
-    leftImageIndex == rightImageIndex ||
-    leftImageIndex == middleImageIndex ||
-    middleImageIndex == rightImageIndex ||
-    check(leftImageIndex) ||
-    check(middleImageIndex) ||
-    check(rightImageIndex)
+    leftImagei == rightImagei ||
+    leftImagei == middleImagei ||
+    middleImagei == rightImagei ||
+    check(leftImagei) ||
+    check(middleImagei) ||
+    check(rightImagei)
   );
 
-  checkArray[0] = leftImageIndex;
-  checkArray[1] = rightImageIndex;
-  checkArray[2] = middleImageIndex;
+  checkArray[0] = leftImagei;
+  checkArray[1] = rightImagei;
+  checkArray[2] = middleImagei;
 
-  console.log(leftImageIndex, rightImageIndex, middleImageIndex, "result");
+  console.log(leftImagei, rightImagei, middleImagei, "result");
 
-  leftImageElement.src = getImage.prototype.allImages[leftImageIndex].source;
-  getImage.prototype.allImages[leftImageIndex].repeat++;
+  leftImageElement.src = getImage.prototype.allImages[leftImagei].source;
+  getImage.prototype.allImages[leftImagei].repeat++;
   middleImageElement.src =
-    getImage.prototype.allImages[middleImageIndex].source;
-  getImage.prototype.allImages[middleImageIndex].repeat++;
-  rightImageElement.src = getImage.prototype.allImages[rightImageIndex].source;
-  getImage.prototype.allImages[rightImageIndex].repeat++;
+    getImage.prototype.allImages[middleImagei].source;
+  getImage.prototype.allImages[middleImagei].repeat++;
+  rightImageElement.src = getImage.prototype.allImages[rightImagei].source;
+  getImage.prototype.allImages[rightImagei].repeat++;
 }
 
-function generateRandomIndex() {
+function generateRandomi() {
   return Math.floor(Math.random() * getImage.prototype.allImages.length);
 }
 
 function percentage() {
   for (var i = 0; i < getImage.prototype.allImages.length; i++) {
     getImage.prototype.allImages[i].shownPercentage =
-      (getImage.prototype.allImages[i].repeat / maxAttempts) * 100;
+      (getImage.prototype.allImages[i].repeat / maxAttempts * 100 );
     getImage.prototype.allImages[i].votePercentage =
-      (getImage.prototype.allImages[i].votes / maxAttempts) * 100;
+      (getImage.prototype.allImages[i].votes / maxAttempts * 100) ;
   }
 }
 
-function check(imgIndex) {
+function check(imgi) {
   for (var i = 0; i < checkArray.length; i++) {
-    if (imgIndex == checkArray[i]) {
+    if (imgi == checkArray[i]) {
       return true;
     }
   }
   return false;
 }
+
+function toLocalStorageObj(jsObj){
+  var stringObj = JSON.stringify(jsObj);
+  localStorage.setItem(jsObj.name, stringObj);
+  return localStorage.getItem(jsObj.name);
+  
+}
+function toJsObj(stringObj){
+  if (localStorage !== null){
+    var jsObj =JSON.parse(stringObj);
+   return jsObj;
+  }
+}
+
+function voteAndRepeatLocalStorage(item){
+  if(localStorage.getItem(item) !== null){
+    
+    localStorageArr=localStorage.getItem(item.split(','));
+    localStorageArr[0]  = localStorageArr[0] +voteInLs;
+    localStorageArr[1]  = localStorageArr[1] +repeatInLs;
+    localStorageArr[2]  = localStorageArr[2] +maxAttemptsLs;
+    
+  /* voteInLs = toJsObj(localStorage.getItem(getImage.prototype.allImages[i].name)).votes;
+  repeatInLs = toJsObj(localStorage.getItem(getImage.prototype.allImages[i].name)).repeat;
+  maxAttemptsLs = maxAttempts;
+  localStorage.setItem(getImage.prototype.allImages[i].name , [voteInLs,repeatInLs,maxAttemptsLs]); */
+  console.log(localStorage.getItem(item), 'if');
+  }
+  else{
+    voteInLs = item.votes;
+    repeatInLs =item.repeat;
+    maxAttemptsLs = Number(maxAttempts);
+    localStorage.setItem(item , [voteInLs,repeatInLs,maxAttemptsLs]);
+    console.log(localStorage.getItem(item));
+    }
+}
+/* for (var i = 0; i < getImage.prototype.allImages.length; i++) {
+   console.log(toLocalStorageObj(getImage.prototype.allImages[i]), "string obj");
+   console.log(toJsObj(localStorage.getItem(getImage.prototype.allImages[i].name)));
+
+} */
+
