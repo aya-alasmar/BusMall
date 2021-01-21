@@ -101,7 +101,6 @@ button:hover{
     color: brown;
 }
 #images-div div{
-
     background-image: url("../img/img-view.png");
     background-repeat: no-repeat;
     background-size:initial;
