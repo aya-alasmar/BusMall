@@ -10,6 +10,7 @@ var imagesNames = [];
 var imgVote = [];
 var statistics = [];
 var checkArray = [-1, -1, -1];
+var userNum;
 
 function getImage(name, source) {
   this.name = name;
@@ -89,9 +90,9 @@ function showResult(event) {
   var resultsList = document.getElementById("results-list");
   resultsList.textContent = " ";
   var resultItem;
-  
+  percentage();
   for (var i = 0; i < getImage.prototype.allImages.length; i++) {
-    percentage(getImage.prototype.allImages[i]);
+  
     resultItem = document.createElement("li");
     resultItem.textContent =
       getImage.prototype.allImages[i].name +
@@ -103,10 +104,10 @@ function showResult(event) {
     resultsList.appendChild(resultItem);
     imgVote.push(getImage.prototype.allImages[i].votePercentage);
     statistics.push(getImage.prototype.allImages[i].shownPercentage);
+   //percentage(getImage.prototype.allImages[i]);
 
-
-    voteAndRepeatLocalStorage(getImage.prototype.allImages[i])
-
+    //voteAndRepeatLocalStorage(getImage.prototype.allImages[i]);
+   
 
 
   }
@@ -134,6 +135,7 @@ function showResult(event) {
       ],
     },
   });
+  userLocalStorage();
 }
 function renderRandomImages() {
   do {
@@ -168,12 +170,25 @@ function generateRandomi() {
   return Math.floor(Math.random() * getImage.prototype.allImages.length);
 }
 
-function percentage(item) {
+/* function percentage(item) {
+  if(localStorage.getItem(item.name) != null || localStorage.getItem(item.name) != undefined){
   localStorageArr=localStorage.getItem(item.name).split(',');
    item.shownPercentage = localStorageArr[1] / localStorageArr[2] * 100;
    item.votePercentage =localStorageArr[0] /localStorageArr[2] * 100;
    console.log(item.shownPercentage,item.votePercentage);
+  }
+  else{
+    voteAndRepeatLocalStorage(item);
+  }
 
+} */
+function percentage() {
+  for (var i = 0; i < getImage.prototype.allImages.length; i++) {
+    getImage.prototype.allImages[i].shownPercentage =
+      (getImage.prototype.allImages[i].repeat / maxAttempts * 100 );
+    getImage.prototype.allImages[i].votePercentage =
+      (getImage.prototype.allImages[i].votes / maxAttempts * 100) ;
+  }
 }
 
 function check(imgi) {
@@ -185,7 +200,7 @@ function check(imgi) {
   return false;
 }
 
-function voteAndRepeatLocalStorage(item) {
+/* function voteAndRepeatLocalStorage(item) {
 
   if (localStorage.getItem(item.name) !== null) {
     localStorageArr=localStorage.getItem(item.name).split(',');
@@ -205,6 +220,45 @@ function voteAndRepeatLocalStorage(item) {
   }
   percentage(item);
 
+  } */
+
+  
+  
+
+
+/*   for (var i = 0; i < getImage.prototype.allImages.length; i++) {
+   console.log(toLocalStorageObj(getImage.prototype.allImages[i]), "string obj");
+   console.log(toJsObj(localStorage.getItem(getImage.prototype.allImages[i].name)));
+} */
+
+
+
+function userLocalStorage(){
+
+  if(localStorage.length == 0 ){
+    userNum=1;
+ }
+ else {
+  userNum=localStorage.getItem("userCounter") ;
+ }
+ localStorage.setItem("user "+userNum ,JSON.stringify( getImage.prototype.allImages));
+ userNum++;
+ localStorage.setItem("userCounter",userNum);
+
+}
+toJsObj();
+function toJsObj(){
+  if (localStorage.length != 0){
+   for (var i = 0; i < localStorage.length; i++) {
+    var key =localStorage.key(i)
+    console.log( " the local Storage Content for ", key ," is : ", JSON.parse(localStorage.getItem(key)));
+     
+   }
+   //console.log(localStorage.length);
   }
+  else
+  console.log(" the local Storage is Empty!");
+}
+
 
 
