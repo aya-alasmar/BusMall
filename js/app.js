@@ -204,6 +204,7 @@ function userLocalStorage() {
   );
   userNum++;
   localStorage.setItem("userCounter", userNum);
+  
 }
 
 // this function will check if localStorage empty or not , if not empty with run over the localStorage keys and then take the value for each key to convert the string object(localStorga object ) to Js object and retrive the objects for each user in log.
@@ -211,12 +212,9 @@ function toJsObj() {
   if (localStorage.length != 0) {
     for (var i = 0; i < localStorage.length; i++) {
       var key = localStorage.key(i);
-      console.log(
-        " the local Storage Content for ",
-        key,
-        " is : ",
-        JSON.parse(localStorage.getItem(key))
-      );
+      if( key != "userCounter"){
+      console.log(" the local Storage Content for ", key," is : ",JSON.parse(localStorage.getItem(key)));
+      }
     }
     //console.log(localStorage.length);
   } else console.log(" the local Storage is Empty!");
